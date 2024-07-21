@@ -7,7 +7,7 @@ import { BsChatTextFill } from 'react-icons/bs'
 import Fiverr_Icon from '../components/Fiverr_Icon';
 import Footer from '../components/Footer';
 import { Modal } from 'antd';
-
+import {DETAILS , CONTACTS } from '../constants/constants'
 const Contact = () => {
     const [isOpen, setIsOpen] = useState(false)
 
@@ -20,39 +20,36 @@ const Contact = () => {
                         <div className="card_stylings w-full md:w-1/2 p-5 md:p-6 lg:p-8 flex flex-col gap-y-4">
                             <div className="flex justify-between items-center">
                                 <span className='md:text-base'>Country:</span>
-                                <span className='text-LightGray md:text-sm'>Pakistan</span>
+                                <span className='text-LightGray md:text-sm'>{DETAILS.Residence}</span>
                             </div>
                             <div className="flex justify-between items-center">
                                 <span className='md:text-base'>City:</span>
-                                <span className='text-LightGray md:text-sm'>Peshawar</span>
+                                <span className='text-LightGray md:text-sm'>{DETAILS.State}</span>
                             </div>
                             <div className="flex justify-between items-center">
-                                <span className='md:text-base'>Company:</span>
-                                <span className='text-LightGray md:text-sm'>visualsX</span>
+                                <span className='md:text-base'>Postal code:</span>
+                                <span className='text-LightGray md:text-sm'>{DETAILS.post}</span>
                             </div>
                         </div>
                         <div className="card_stylings rounded-xl w-full md:w-1/2 p-5 md:p-6 lg:p-8 flex flex-col gap-y-4">
                             <div className="flex justify-between items-center">
                                 <span className='md:text-base'>Email:</span>
-                                <span className='text-LightGray text-sm'>iosamajavaid@gmail.com</span>
+                                <span className='text-LightGray text-sm'>{CONTACTS.EMAIL}</span>
                             </div>
-                            <div className="flex justify-between items-center">
-                                <span className='md:text-base'>Linkedin:</span>
-                                <span className='text-LightGray text-sm'>iosamajavaid</span>
-                            </div>
+                            
                             <div className="flex justify-between items-center">
                                 <span className='md:text-base'>Phone:</span>
-                                <span className='text-LightGray text-sm'>+92 (315) 9591822</span>
+                                <span className='text-LightGray text-sm'>{CONTACTS.PHONE}</span>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className="h-16 w-full card_stylings text-xl sm:text-3xl flex gap-x-8 sm:gap-x-16 items-center justify-center text-Snow">
                     <a className='hover:scale-125 ease-in-out duration-700' href="" target='_blank' rel="noreferrer"><HiMail /></a>
-                    <a className='hover:scale-125 ease-in-out duration-700' href="https://github.com/osamajavaid" target='_blank' rel="noreferrer"><FaGithub /></a>
-                    <a className='hover:scale-125 ease-in-out duration-700' href="https://www.linkedin.com/in/iosamajavaid/" target='_blank' rel="noreferrer"><FaLinkedin /></a>
+                    <a className='hover:scale-125 ease-in-out duration-700' href="https://github.com/Aparnap2/Aparnap2" target='_blank' rel="noreferrer"><FaGithub /></a>
+                    <a className='hover:scale-125 ease-in-out duration-700' href=" " target='_blank' rel="noreferrer"><FaLinkedin /></a>
                     {/* <a className='hover:scale-125 ease-in-out duration-700' href="https://x.com/iosamajavaid" target='_blank' rel="noreferrer"><FaTwitter /></a> */}
-                    <a className='hover:scale-125 ease-in-out duration-700 hidden sm:block' href="https://www.fiverr.com/codeworthy" target='_blank' rel="noreferrer"><Fiverr_Icon /></a>
+                    <a className='hover:scale-125 ease-in-out duration-700 hidden sm:block' href=" https://www.fiverr.com/aparnapradhan40?up_rollout=true" target='_blank' rel="noreferrer"><Fiverr_Icon /></a>
                     <a className='hover:scale-125 ease-in-out duration-700 text-2xl sm:text-4xl mt-1' href="#" target='_blank' rel="noreferrer"><SiUpwork /></a>
                 </div>
 
@@ -108,7 +105,7 @@ const Contact = () => {
             >
                 <div className='flex flex-col items-center justify-center'>
                     <h1 className='text-Green font-bold text-2xl'>In Progress</h1>
-                    <a className='underline text-Snow' target='_blank' href='https://github.com/osamajavaid/portfolio'>Be the one to integrate this!</a>
+                    <a className='underline text-Snow' target='_blank' href='https://github.com/Aparnap2/Aparnap2'>Be the one to integrate this!</a>
                 </div>
             </Modal>
             <Footer />
