@@ -84,8 +84,8 @@ export const CONTACTS = {
   PHONE: '+919907552314',
 };
 export const SOCIAL_LINKS = {
-  GITHUB: 'https://github.com/osamajavaid',
-  LINKEDIN: 'https://www.linkedin.com/in/iosamajavaid/',
-  TWITTER: 'https://twitter.com/iosamajavaid',
+  GITHUB: 'https://github.com/Aparnap2/',
+  LINKEDIN: 'https://www.linkedin.com/in/aparna-pradhan',
+  TWITTER: 'https://x.com/Aparna_108_dev',
 
 };
