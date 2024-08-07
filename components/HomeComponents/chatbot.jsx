@@ -1,77 +1,126 @@
-import React, { useState, useEffect, useRef } from 'react';
-import ReactMarkdown from 'react-markdown';
+"use client";
 
-const Chatbot = () => {
-  const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState('');
-  const [isOpen, setIsOpen] = useState(false);
-  const chatEndRef = useRef(null);
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { Message as MessageProps, useChat } from "ai/react";
+import Form from "./Form";
+import Message from "./messages";
+import cx from "../../utils/cx";
+// import PoweredBy from "@/components/powered-by";
+// import MessageLoading from "@/components/message-loading";
+import { INITIAL_QUESTIONS } from "./const";
+
+export default function Chatbot() {
+  const formRef = useRef(null);
+  const messagesEndRef = useRef(null);
+
+  const [streaming, setStreaming] = useState(false);
+
+  const { messages, input, handleInputChange, handleSubmit, setInput } =
+    useChat({
+      api: "/api/guru",
+      initialMessages: [
+       
+        {
+          id: "0",
+          role: "system",
+          content: `You can ask me about my projects, skills, or experience. I'm here to help!`,
+        },
+      ],
+      onResponse: () => {
+        setStreaming(false);
+      },
+    });
+
+  const onClickQuestion = (value) => {
+    setInput(value);
+    setTimeout(() => {
+      formRef.current?.dispatchEvent(
+        new Event("submit", {
+          cancelable: true,
+          bubbles: true,
+        }),
+      );
+    }, 1);
+  };
 
   useEffect(() => {
-    if (isOpen) {
-      chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView();
     }
-  }, [messages, isOpen]);
+  }, [messages]);
 
-  const handleSendMessage = () => {
-    if (input.trim() === '') return;
-    setMessages((prevMessages) => [...prevMessages, { text: input, sender: 'user' }]);
-    setInput('');
-    simulateBotResponse();
-  };
-
-  const simulateBotResponse = () => {
-    setTimeout(() => {
-      setMessages((prevMessages) => [...prevMessages, { text: 'Hello, how can I help you?', sender: 'bot' }]);
-    }, 1000);
-  };
+  const onSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      handleSubmit(e);
+      setStreaming(true);
+    },
+    [handleSubmit],
+  );
 
   return (
-    <>
-      <button
-        className={`fixed bottom-24 right-16 bg-saffron-500 hover:bg-saffron-600
-           text-white font-bold py-30 px-40 rounded-full transition-transform transform ${
-          isOpen ? 'rotate-180' : ''
-        }`}
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        {isOpen ? 'Close' : <i className="fa-solid fa-robot"></i>}
-      </button>
-      {isOpen && (
-        <div className="fixed bottom-36 right-20 w-96 bg-gray-800 shadow-2xl p-4 rounded-lg">
-          <div className="chat-header text-saffron-500 text-xl font-bold mb-2">Chatbot</div>
-          <div className="chat-messages h-64 overflow-y-auto p-2 space-y-2">
-            {messages.map((message, index) => (
-              <div
-                key={index}
-                className={`chat-message p-2 rounded-lg ${
-                  message.sender === 'user' ? 'bg-blue-500 text-white self-end' : 'bg-gray-700 text-white self-start'
-                }`}
-              >
-                <ReactMarkdown>{message.text}</ReactMarkdown>
-              </div>
-            ))}
-            <div ref={chatEndRef} />
-          </div>
-          <div className="chat-input mt-4 flex">
-            <input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Type a message..."
-              className="flex-grow p-2 text-white bg-gray-700 rounded-l-lg focus:outline-none"
-            />
-            <button
-              onClick={handleSendMessage}
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-r-lg"
-            >
-              Send
-            </button>
-          </div>
-        </div>
-      )}
-    </>
-  );
-};
+    <main className="relative max-w-screen-md p-4 md:p-6 mx-auto flex min-h-svh !pb-32 md:!pb-40 overflow-y-auto">
+      <div className="w-full">
+        {messages.map((message) => {
+          return <Message key={message.id} {...message} />;
+        })}
 
-export default Chatbot;
+        {/* loading */}
+        {streaming && <MessageLoading />}
+
+        {/* initial question */}
+        {messages.length === 1 && (
+          <div className="mt-4 md:mt-6 grid md:grid-cols-2 gap-2 md:gap-4">
+            {INITIAL_QUESTIONS.map((message) => {
+              return (
+                <button
+                  key={message.content}
+                  type="button"
+                  className="cursor-pointer select-none text-left bg-white font-normal
+                  border border-gray-200 rounded-xl p-3 md:px-4 md:py-3
+                  hover:bg-zinc-50 hover:border-zinc-400"
+                  onClick={() => onClickQuestion(message.content)}
+                >
+                  {message.content}
+                </button>
+              );
+            })}
+          </div>
+        )}
+
+        {/* bottom ref */}
+        <div ref={messagesEndRef} />
+      </div>
+
+      <div
+        className={cx(
+          "fixed z-10 bottom-0 inset-x-0",
+          "flex justify-center items-center",
+          "bg-white",
+        )}
+      >
+        <span
+          className="absolute bottom-full h-10 inset-x-0 from-white/0
+         bg-gradient-to-b to-white pointer-events-none"
+        />
+
+        <div className="w-full max-w-screen-md rounded-xl px-4 md:px-5 py-6">
+          <Form
+            ref={formRef}
+            onSubmit={onSubmit}
+            inputProps={{
+              disabled: streaming,
+              value: input,
+              onChange: handleInputChange,
+            }}
+            buttonProps={{
+              disabled: streaming,
+            }}
+          />
+
+          
+        </div>
+      </div>
+    </main>
+  );
+}
