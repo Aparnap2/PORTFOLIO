@@ -85,7 +85,7 @@ export const CONTACTS = {
 };
 export const SOCIAL_LINKS = {
   GITHUB: 'https://github.com/Aparnap2/',
-  LINKEDIN: 'https://www.linkedin.com/in/aparna-pradhan',
+  LINKEDIN: 'https://www.linkedin.com/in/aparna-pradhan-06b882215/',
   TWITTER: 'https://x.com/Aparna_108_dev',
 
 };

@@ -48,13 +48,13 @@ const Banner = () => {
                 </div>
               </div>
             </div>
-            <div className="w-48 h-52 relative hidden md:block">
+            {/* <div className="w-48 h-52 relative hidden md:block">
               <img
                 className="absolute top-8 w-full h-full"
                 src="images/emoji.png"
                 alt="emoji"
               />
-            </div>
+            </div> */}
           </div>
         </div>
 
