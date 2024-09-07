@@ -1,0 +1,26 @@
+import Badge from '../Badge';
+import { TECH_STACK , INTERESTS } from '../../../constants/constants';
+const Tools = () => {
+  return (
+    <div className='flex flex-col space-y-1 pt-6'>
+      <div className='flex flex-col gap-y-4'>
+        <span className='text-Snow text-xs font-bold'>Tools</span>
+        <div className='flex flex-wrap gap-2'>
+          {TECH_STACK.map((item, index) => (
+            <Badge key={index} title={item} />
+          ))}
+        </div>
+        
+        <div className='h-1 bg-gray-200 my-2'></div> 
+        <span className='text-orange-500 text-xs font-bold'>Exploring</span>
+        <div className='flex flex-wrap gap-2'>
+          {INTERESTS.map((item, index) => (
+            <Badge key={index} title={item} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Tools;
